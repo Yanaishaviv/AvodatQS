@@ -85,15 +85,15 @@ def decrypt(pk, ciphertext):
     return ''.join(plain)
 
 
-#if __name__ == '__main__':
-p = int(input("Enter a prime number: "))
-q = int(input("Enter a different prime number: "))
-public, private = generate_keypair(p, q)
-print("Your public key is ", public, " and your private key is ", private)
-message = input("Enter a message to encrypt with your public key: ")
-encrypted_msg = encrypt(public, message)
-print("Your encrypted message is: ")
-print(*encrypted_msg, sep=' ')
-print("Decrypting message with private key ", private, " . . .")
-print("Your message is:")
-print(decrypt(private, encrypted_msg))
+if __name__ == '__main__':
+    p = int(input("Enter a prime number: "))
+    q = int(input("Enter a different prime number: "))
+    public, private = generate_keypair(p, q)
+    print("Your public key is ", public, " and your private key is ", private)
+    message = input("Enter a message to encrypt with your public key: ")
+    encrypted_msg = encrypt(public, message)
+    print("Your encrypted message is: ")
+    print(*encrypted_msg, sep=' ')
+    print("Decrypting message with private key ", private, " . . .")
+    print("Your message is:")
+    print(decrypt(private, encrypted_msg))
