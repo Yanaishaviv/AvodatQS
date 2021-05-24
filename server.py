@@ -15,7 +15,6 @@ while flag:
         if data != b'':
             print(data.decode())
             user1_conn.send(str.encode("hi"))
-            break
         if data == b'stop':
             flag = False
             break
