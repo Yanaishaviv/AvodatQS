@@ -11,4 +11,4 @@ def check(packet):
 # packets = scapy.all.sniff(2)
 packets = 3
 yes = scapy.sniff(count = constants.NUMBER_OF_PACKETS, lfilter = check)
-print('success ', yes[2][scapy.RAW].load)
+print('success ',scapy.raw(yes[2]))
