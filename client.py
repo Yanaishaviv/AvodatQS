@@ -1,11 +1,21 @@
 import socket
+import RSA
 
 my_socket = socket.socket()
-my_socket.connect(("127.0.0.1", 35491))
+my_socket.connect(("10.0.0.4", 35491))
 
-HTTPMessage = "GET / HTTP/1.1\r\nHost: localhost\r\n Connection: close\r\n\r\n"
-bytes1 = str.encode(HTTPMessage)
+start_connection = "asking for public key"
+bytes1 = str.encode(start_connection)
 
 my_socket.send(bytes1)
-#my_socket.send(str.encode(""))
-my_socket.close()
+
+public_key_0 = int.from_bytes(my_socket.recv(1024), 'big')
+public_key_1 = int.from_bytes(my_socket.recv(1024), 'big')
+public_key = (public_key_0, public_key_1)
+encr_mes = RSA.encrypt214(public_key, input("enter message: "))
+my_socket.send(str.encode(encr_mes.__str__()))
+# print(my_socket.recv(2123))
+print("sent success")
+
+mess = str.encode('stop')
+my_socket.send(mess)
