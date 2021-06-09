@@ -9,9 +9,15 @@ if __name__ == '__main__':
     established_connection = Event()
     established_connection.clear()
     sender_server = server_obj.server_obj(thread_id = 0, name = "sender",
-        port = constants.SENDER_PORT, public_key = public, private_key = private, sender = True)
+        port = constants.SENDER_PORT, public_key = public, private_key = private, 
+        sender = True)
     sender_server.start()
     recv_server = server_obj.server_obj(thread_id = 0, name = "recv", 
-        port = constants.RECIEVER_PORT, public_key = public, private_key = private, sender = False)
+        port = constants.RECIEVER_PORT, public_key = public, private_key = private, 
+        sender = False, even = established_connection)
     recv_server.start()
+    established_connection.wait()
+    print(recv_server.key)
+    recv_server.server_socket.close()
+    sender_server.server_socket.close()
     

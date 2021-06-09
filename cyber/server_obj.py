@@ -7,7 +7,7 @@ import functions
 import server
 
 class server_obj(threading.Thread):
-    def __init__(self, thread_id, name, port, public_key, private_key, sender = False):
+    def __init__(self, thread_id, name, port, public_key, private_key, sender = False, even = None):
         threading.Thread.__init__(self)
         self.thread_id = thread_id 
         self.name = name
@@ -17,6 +17,7 @@ class server_obj(threading.Thread):
         self.sender = sender
         self.public_key = public_key
         self.private_key = private_key
+        self.event = even
 
     def run(self):
         print("starting reader", self.name)
@@ -47,6 +48,7 @@ class server_obj(threading.Thread):
         else:
             encrypted_key = server.recieve_data(self.cli_con)
             self.key = server.get_from_rsa(self.private_key, encrypted_key)
+            self.event.set()
 
 
 
