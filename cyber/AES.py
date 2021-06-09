@@ -6,3 +6,6 @@
 # TODO: matrix multiplication with their weird variant
 # TODO: find a library with AES key schedule in it
 # work with some kind of initialization vector
+
+def encrypt(key, data):
+    return data

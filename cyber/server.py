@@ -17,10 +17,10 @@ def use_rsa():
     return RSA.generate_keypair(prime1, prime2)
 
 
-def build_socket():
+def build_socket(my_ip = functions.get_ip(), my_port = constants.PORT):
     server_socket = socket.socket()
-    ip = constants.HOME_IP
-    port = constants.PORT
+    ip = my_ip
+    port = my_port
     server_socket.bind((ip, port))
     server_socket.listen()
     return server_socket
@@ -47,7 +47,9 @@ def send_int_data(client_connection, data):
     message = data.to_bytes(10, 'big')
     client_connection.send(message)
 
-
+def get_from_rsa(private, encrypted_msg):
+    data = functions.parse_string_data(encrypted_msg)
+    return RSA.decrypt(private, data)
 
 # server_socket = socket.socket()
 # ip = "0.0.0.0"
