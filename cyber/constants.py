@@ -115,4 +115,4 @@ INV_SUB_BYTE_TABLE = [
        0xe1,   0x69,   0x14,   0x63,   0x55,   0x21,   0x0c,   0x7d,
 ]
 
-print(hex(INV_SUB_BYTE_TABLE[SUB_BYTE_TABLE[0x34]]))
+# print(hex(INV_SUB_BYTE_TABLE[SUB_BYTE_TABLE[0x34]]))

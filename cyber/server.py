@@ -17,7 +17,7 @@ def use_rsa():
     return RSA.generate_keypair(prime1, prime2)
 
 
-def build_socket(my_ip = functions.get_ip(), my_port = constants.PORT):
+def build_socket(my_ip = functions.get_ip(), my_port = constants.SENDER_PORT):
     server_socket = socket.socket()
     ip = my_ip
     port = my_port
@@ -76,16 +76,16 @@ def get_from_rsa(private, encrypted_msg):
 # print("wow, can't believe this worked")
 
 
-if __name__ == '__main__':
-    server_socket = build_socket()
-    (client_connection, client_address) = accept_client(server_socket)
-    entry = recieve_data(client_connection)
-    print(entry)
-    public, private = use_rsa()
-    send_int_data(client_connection, public[0])
-    send_int_data(client_connection, public[1])
-    encrypted_msg = recieve_data(client_connection)
-    data = functions.parse_string_data(encrypted_msg)
-    print(encrypted_msg)
-    print(RSA.decrypt(private, data))
-    server_socket.close()
+# if __name__ != '__main__':
+#     server_socket = build_socket()
+#     (client_connection, client_address) = accept_client(server_socket)
+#     entry = recieve_data(client_connection)
+#     print(entry)
+#     public, private = use_rsa()
+#     send_int_data(client_connection, public[0])
+#     send_int_data(client_connection, public[1])
+#     encrypted_msg = recieve_data(client_connection)
+#     data = functions.parse_string_data(encrypted_msg)
+#     print(encrypted_msg)
+#     print(RSA.decrypt(private, data))
+#     server_socket.close()
