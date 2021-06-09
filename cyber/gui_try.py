@@ -1,14 +1,15 @@
 import tkinter as tk
-import server_send
+import main_server
 
 class Application(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, sender ,master = None, event = None):
         super().__init__(master)
         self.master = master
         self.pack()
+        self.event = event
         self.create_widgets()
+        self.sender_server = sender
         
-
 
     def create_widgets(self):
         self.msg = tk.StringVar()
@@ -41,22 +42,34 @@ class Application(tk.Frame):
 
 
     def add_quit_button(self):
+        self.event.set()
         self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
         self.quit.pack(side="bottom")
+
+
+
+
+    def insert_message(self, message):
+        # message1 = tk.StringVar()
+        # message1.set(message)
+        # self.msg_list.insert(tk.END, "gelo")
+        self.msg_list.insert(tk.END, ("yoooda: " + message))
+
 
 
     def get_input(self):
         #event.widget["activeforeground"] = "red"
         data = self.inp.get()
-        print(data)
-        self.msg_list.insert(tk.END, data)
+        self.msg_list.insert(tk.END, ("me: " + data))
         self.msg.set("")
+        self.sender_server.send_message(data)
+        
 
 
 
 
-root = tk.Tk()
-app = Application(master=root)
-app.master.title("Yanai's chat")
-# app.master.minsize(1000,400)
-app.mainloop()
+# root = tk.Tk()
+# app = Application(master=root)
+# app.master.title("Yanai's chat")
+# # app.master.minsize(1000,400)
+# app.mainloop()

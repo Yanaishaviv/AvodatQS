@@ -7,7 +7,8 @@ import functions
 import server
 
 class server_obj(threading.Thread):
-    def __init__(self, thread_id, name, port, public_key, private_key, sender = False):
+    def __init__(self, thread_id, name, port, public_key, private_key, 
+        sender = False, even = None, app_gui = None, quit_event = None):
         threading.Thread.__init__(self)
         self.thread_id = thread_id 
         self.name = name
@@ -17,14 +18,18 @@ class server_obj(threading.Thread):
         self.sender = sender
         self.public_key = public_key
         self.private_key = private_key
+        self.event = even
+        self.app = app_gui
+        self.quit_event = quit_event
 
     def run(self):
         print("starting reader", self.name)
         (client_connection, client_address) = server.accept_client(self.server_socket)
-        print(client_connection)
         self.cli_con = client_connection
         self.cli_adr = client_address
         self.prepare_encryption()
+        if not self.sender:
+            self.read_chat()
         # if not self.sender:
         #     # encrypted_key = server.recieve_data(self.cli_con)
         #     # self.key = server.get_from_rsa(self.private_key, encrypted_key)
@@ -47,9 +52,11 @@ class server_obj(threading.Thread):
         else:
             encrypted_key = server.recieve_data(self.cli_con)
             self.key = server.get_from_rsa(self.private_key, encrypted_key)
+            self.event.set()
 
 
-
+    def add_aes_key(self, key):
+        self.key = key
 
     def send_message(self, data):
         encrypted_msg = AES.encrypt(self.key, data)
@@ -58,7 +65,12 @@ class server_obj(threading.Thread):
     def recieve_data(self):
         encrypted_msg = server.recieve_data(self.cli_con)
         msg = AES.decrypt(self.key, encrypted_msg)
+        self.app.insert_message(msg)
+        print(msg)
         return msg
 
-
-# thread1 = server_obj(0, "sender", port = constants.SENDER_PORT, sender = True)
+    def read_chat(self):
+        print(self.cli_con)
+        while self.quit_event.is_set():
+            self.recieve_data()
+        print("this is a bug! server_obj line 76")
