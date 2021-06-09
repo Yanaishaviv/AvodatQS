@@ -35,6 +35,7 @@ def recieve_data(client_connection):
     while True:
         message = client_connection.recv(1024)
         if message != b'':
+            print(message.decode())
             return message.decode()            
 
 
