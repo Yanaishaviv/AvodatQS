@@ -10,6 +10,7 @@ SUB_BYTE_TABLE = [  # The Rijndael S-box, a substitution box for the AES encrypt
     # instead of using rows and columns, i concatinated the whole table.
     # so instead of using for example [90, 0a], you should enter the whole 
     # number: SUB_BYTE_TABLE[9a]
+    #https://en.wikipedia.org/wiki/Rijndael_S-box for more info
 
     0x63,  0x7c,   0x77,   0x7b,   0xf2,	0x6b,	0x6f,	0xc5,
     	0x30,	0x01,	0x67,	0x2b,	0xfe,	0xd7,	0xab,	0x76,
