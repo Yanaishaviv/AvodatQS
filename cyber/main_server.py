@@ -1,6 +1,6 @@
 import server
 import server_obj
-import gui_try
+import gui
 from threading import Thread, Event
 import constants
 import tkinter as tk
@@ -16,7 +16,7 @@ if __name__ == '__main__':
         port = constants.SENDER_PORT, public_key = public, private_key = private, 
         sender = True)
     sender_server.start()
-    app = gui_try.Application(master = root, sender = sender_server, event = stopped_connection)
+    app = gui.Application(master = root, sender = sender_server, event = stopped_connection)
     recv_server = server_obj.server_obj(thread_id = 0, name = "recv", 
         port = constants.RECIEVER_PORT, public_key = public, private_key = private, 
         sender = False, even = established_connection, app_gui = app, quit_event = stopped_connection)
