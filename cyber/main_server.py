@@ -1,3 +1,4 @@
+import threading
 import server
 import server_obj
 import gui
@@ -25,7 +26,10 @@ if __name__ == '__main__':
     sender_server.add_aes_key(recv_server.key)
     app.master.title("Yanai's chat")
     app.mainloop()
-
+    stopped_connection.set()
+    print(threading.enumerate())
+    print(stopped_connection)
     recv_server.server_socket.close()
     sender_server.server_socket.close()
+
     
