@@ -65,12 +65,13 @@ class server_obj(threading.Thread):
     def recieve_data(self):
         encrypted_msg = server.recieve_data(self.cli_con)
         msg = AES.decrypt(self.key, encrypted_msg)
+        if msg == '\quit':
+            self.quit_event.set()
         self.app.insert_message(msg)
-        print(msg)
         return msg
 
     def read_chat(self):
-        print(self.cli_con)
-        while self.quit_event.is_set():
+        print(self.quit_event)
+        while not self.quit_event.is_set():
             self.recieve_data()
         print("this is a bug! server_obj line 76")
