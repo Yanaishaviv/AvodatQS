@@ -2,11 +2,10 @@ import tkinter as tk
 import main_server
 
 class Application(tk.Frame):
-    def __init__(self, sender ,master = None, event = None):
+    def __init__(self, sender ,master = None):
         super().__init__(master)
         self.master = master
         self.pack()
-        self.event = event
         self.create_widgets()
         self.sender_server = sender
         
@@ -42,11 +41,13 @@ class Application(tk.Frame):
 
 
     def add_quit_button(self):
-        self.event.set()
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
+        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.dest)
         self.quit.pack(side="bottom")
 
 
+    def dest(self):
+        self.sender_server.send_message('\quit')
+        self.master.destroy()
 
 
     def insert_message(self, message):
