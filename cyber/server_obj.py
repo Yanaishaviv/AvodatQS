@@ -23,6 +23,7 @@ class server_obj(threading.Thread):
         self.quit_event = quit_event
 
     def run(self):
+        print("Starting thread", self.name)
         (client_connection, client_address) = server.accept_client(self.server_socket)
         self.cli_con = client_connection
         self.cli_adr = client_address
@@ -48,7 +49,9 @@ class server_obj(threading.Thread):
         if self.sender:
             server.send_int_data(self.cli_con, self.public_key[0])
             server.send_int_data(self.cli_con, self.public_key[1])
+            print("rsa sent")
         else:
+            print("reached line 53 server obj")
             encrypted_key = server.recieve_data(self.cli_con)
             self.add_aes_key(server.get_from_rsa(self.private_key, encrypted_key))
             self.event.set()
@@ -56,7 +59,7 @@ class server_obj(threading.Thread):
 
     def add_aes_key(self, key):
         self.key = key
-        self.AES = AES(self.key)
+        self.AES = AES.AES(self.key)
 
     def send_message(self, data):
         encrypted_msg = self.AES.encrypt(data)
