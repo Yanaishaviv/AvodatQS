@@ -1,11 +1,11 @@
 import hashlib as hash
 from Crypto import Random
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES as AES1
 from base64 import b64encode, b64decode
 
-class AES2():
+class AES():
     def __init__(self, key):
-        self.block_size = AES.block_size
+        self.block_size = AES1.block_size
         self.key = hash.sha256(key.encode()).digest()
 
     def __pad(self, data):
@@ -24,14 +24,14 @@ class AES2():
     def encrypt(self, text):
         text = self.__pad(text)
         iv = Random.new().read(self.block_size)
-        aes_encrypter = AES.new(self.key, AES.MODE_CBC, iv)
+        aes_encrypter = AES1.new(self.key, AES1.MODE_CBC, iv)
         msg_to_send = aes_encrypter.encrypt(text.encode())
         return b64encode(iv + msg_to_send).decode("utf-8")
 
     def decrypt(self, text):
         encrypted_data = b64decode(text)
         iv = encrypted_data[:-self.block_size]
-        aes_decrypter = AES.new(self.key, AES.MODE_CBC, iv)
+        aes_decrypter = AES1.new(self.key, AES1.MODE_CBC, iv)
         readable_data = aes_decrypter.decrypt(encrypted_data[self.block_size:]).decode("utf-8")
         return self.__unpad(readable_data)
 
