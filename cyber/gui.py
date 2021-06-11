@@ -1,4 +1,5 @@
 import tkinter as tk
+import threading
 
 class Application(tk.Frame):
     def __init__(self, sender ,master = None):
@@ -49,6 +50,7 @@ class Application(tk.Frame):
             self.sender_server.send_message('\quit')
         else:
             self.sender_server.send_message('\quit1')
+            print("reached gui line 53", threading.current_thread())
         self.master.destroy()
 
 

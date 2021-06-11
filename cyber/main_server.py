@@ -27,9 +27,9 @@ if __name__ == '__main__':
     app.master.title("Yanai's chat")
     app.mainloop()
     stopped_connection.set()
-    print(threading.enumerate())
-    print(stopped_connection)
+    print(stopped_connection.is_set())
     recv_server.server_socket.close()
     sender_server.server_socket.close()
+    print(threading.enumerate())
 
     

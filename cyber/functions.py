@@ -35,7 +35,7 @@ def turn_to_hex(message):
 def find_prime(bit_range):
     rang = 2 ** bit_range
     prime_list = []
-    for i in range(rang):
+    for i in range(2**(bit_range-1), rang):
         if sympy.isprime(i):
             prime_list.append(i)
     return choice(prime_list)
