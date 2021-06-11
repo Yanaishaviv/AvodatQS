@@ -1,5 +1,5 @@
-import server
-import server_obj
+import client
+import client_obj
 import gui
 from threading import Thread, Event
 import constants
@@ -7,22 +7,34 @@ import tkinter as tk
 
 
 if __name__ == '__main__':
-    root = tk.Tk()
-    established_connection = Event()
-    stopped_connection = Event()
-    established_connection.clear()
-    sender_server = server_obj.server_obj(thread_id=0, name="sender",
-                                          port=constants.SENDER_PORT, public_key=public, private_key=private,
-                                          sender=True)
-    sender_server.start()
-    app = gui.Application(master=root, sender=sender_server,
-                          event=stopped_connection)
-    recv_server = server_obj.server_obj(thread_id=0, name="recv",
-                                        port=constants.RECIEVER_PORT, public_key=public, private_key=private,
-                                        sender=False, even=established_connection, app_gui=app, quit_event=stopped_connection)
-    recv_server.start()
-    established_connection.wait()
-    sender_server.add_aes_key(recv_server.key)
-    app.master.title("Yooda's chat")
-    app.mainloop()
+        root = tk.Tk()
+        keys = {"public" : "", 
+                "aes_key": ""}
+        established_connection = Event()
+        stopped_connection = Event()
+        established_connection.clear()
+        recv_client = client_obj.client_obj(thread_id=0, name="recv_client",
+                                                port = constants.SENDER_PORT, keys_dict = keys,
+                                                event = established_connection,
+                                                recv = True, quit_event = stopped_connection)
+
+        recv_client.start()
+        established_connection.wait()
+        sender_client = client_obj.client_obj(thread_id = 0, name = "sender_client",
+                                                port = constants.RECIEVER_PORT, keys_dict = keys, 
+                                                recv = False)
+        recv_client.start()
+
+        app = gui.Application(master = root, sender = sender_client,
+                                        event = stopped_connection)
+
+        recv_client.add_app(app)
+        established_connection.wait()
+        sender_client.add_aes_key()
+        app.master.title("Yooda's chat")
+        app.mainloop()
+        stopped_connection.set()
+        recv_client.socket.close()
+        sender_client.socket.close()
+
 

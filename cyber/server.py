@@ -8,10 +8,10 @@ def use_rsa():
     '''
     hello, is this working?
     '''
-    prime_num1 = input("enter a prime number: ") 
+    prime_num1 = functions.find_prime(constants.BITS_FOR_RSA) 
     # rsa needs two prime numbers to calculate
     prime1 = int(prime_num1)
-    prime_num2 = input("enter another prime number: ")
+    prime_num2 = functions.find_prime(constants.BITS_FOR_RSA) 
     prime2 = int(prime_num2)
     # i'm using one file to hold all RSA related functions
     return RSA.generate_keypair(prime1, prime2)

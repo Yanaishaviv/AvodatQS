@@ -23,7 +23,6 @@ class server_obj(threading.Thread):
         self.quit_event = quit_event
 
     def run(self):
-        print("starting reader", self.name)
         (client_connection, client_address) = server.accept_client(self.server_socket)
         self.cli_con = client_connection
         self.cli_adr = client_address
@@ -51,27 +50,31 @@ class server_obj(threading.Thread):
             server.send_int_data(self.cli_con, self.public_key[1])
         else:
             encrypted_key = server.recieve_data(self.cli_con)
-            self.key = server.get_from_rsa(self.private_key, encrypted_key)
+            self.add_aes_key(server.get_from_rsa(self.private_key, encrypted_key))
             self.event.set()
 
 
     def add_aes_key(self, key):
         self.key = key
+        self.AES = AES(self.key)
 
     def send_message(self, data):
-        encrypted_msg = AES.encrypt(self.key, data)
+        encrypted_msg = self.AES.encrypt(data)
         server.send_str_data(self.cli_con, encrypted_msg)
 
     def recieve_data(self):
         encrypted_msg = server.recieve_data(self.cli_con)
-        msg = AES.decrypt(self.key, encrypted_msg)
+        msg = self.AES.decrypt(encrypted_msg)
+        if msg == '\quit1':
+            self.quit_event.set()
+            return
         if msg == '\quit':
             self.quit_event.set()
+            self.app.dest(False)
+            return
         self.app.insert_message(msg)
         return msg
 
     def read_chat(self):
-        print(self.quit_event)
         while not self.quit_event.is_set():
             self.recieve_data()
-        print("this is a bug! server_obj line 76")

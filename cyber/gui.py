@@ -1,5 +1,4 @@
 import tkinter as tk
-import main_server
 
 class Application(tk.Frame):
     def __init__(self, sender ,master = None):
@@ -45,8 +44,11 @@ class Application(tk.Frame):
         self.quit.pack(side="bottom")
 
 
-    def dest(self):
-        self.sender_server.send_message('\quit')
+    def dest(self, first = True):
+        if first:
+            self.sender_server.send_message('\quit')
+        else:
+            self.sender_server.send_message('\quit1')
         self.master.destroy()
 
 
@@ -56,14 +58,16 @@ class Application(tk.Frame):
         # self.msg_list.insert(tk.END, "gelo")
         self.msg_list.insert(tk.END, ("yoooda: " + message))
 
-
-
     def get_input(self):
         #event.widget["activeforeground"] = "red"
         data = self.inp.get()
-        self.msg_list.insert(tk.END, ("me: " + data))
-        self.msg.set("")
-        self.sender_server.send_message(data)
+        if data == '\quit1' or data == '\quit':
+            self.msg_list.insert(tk.END, "error: can't send message \'\quit\'")
+            self.msg.set("")
+        else:
+            self.msg_list.insert(tk.END, ("me: " + data))
+            self.msg.set("")
+            self.sender_server.send_message(data)
         
 
 

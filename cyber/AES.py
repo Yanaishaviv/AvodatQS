@@ -36,7 +36,7 @@ class AES2():
         return self.__unpad(readable_data)
 
 
-aes = AES2("e")
-data = aes.encrypt("hello, friend")
-print(data)
-print(aes.decrypt(data))
+# aes = AES2("e")
+# data = aes.encrypt("hello, friend")
+# print(data)
+# print(aes.decrypt(data))

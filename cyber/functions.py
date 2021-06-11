@@ -1,5 +1,7 @@
 import socket
 import constants 
+import sympy
+from random import choice
 
 def list_nums(message):
     tmp_msg = message[1:-1]
@@ -30,6 +32,14 @@ def turn_to_hex(message):
     print(new_message)
     return new_message
 
+def find_prime(bit_range):
+    rang = 2 ** bit_range
+    prime_list = []
+    for i in range(rang):
+        if sympy.isprime(i):
+            prime_list.append(i)
+    return choice(prime_list)
+
 
 # turn_to_hex('''52	09	6a	d5	30	36	a5	38	bf	40	a3	9e	81	f3	d7	fb
 #             10	7c	e3	39	82	9b	2f	ff	87	34	8e	43	44	c4	de	e9	cb
@@ -47,3 +57,4 @@ def turn_to_hex(message):
 #             d0	60	51	7f	a9	19	b5	4a	0d	2d	e5	7a	9f	93	c9	9c	ef
 #             e0	a0	e0	3b	4d	ae	2a	f5	b0	c8	eb	bb	3c	83	53	99	61
 #             f0	17	2b	04	7e	ba	77	d6	26	e1	69	14	63	55	21	0c	7d''')
+
