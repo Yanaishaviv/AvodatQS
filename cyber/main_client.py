@@ -23,10 +23,9 @@ if __name__ == '__main__':
         sender_client = client_obj.client_obj(thread_id = 0, name = "sender_client",
                                                 port = constants.RECIEVER_PORT, keys_dict = keys, 
                                                 recv = False)
-        recv_client.start()
+        sender_client.start()
 
-        app = gui.Application(master = root, sender = sender_client,
-                                        event = stopped_connection)
+        app = gui.Application(master = root, sender = sender_client)
 
         recv_client.add_app(app)
         established_connection.wait()
