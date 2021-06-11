@@ -1,3 +1,4 @@
+import threading
 import client
 import client_obj
 import gui
@@ -33,6 +34,7 @@ if __name__ == '__main__':
         app.master.title("Yooda's chat")
         app.mainloop()
         stopped_connection.set()
+        print(threading.enumerate())
         recv_client.socket.close()
         sender_client.socket.close()
 
