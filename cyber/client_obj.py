@@ -5,8 +5,9 @@ import threading
 import random
 
 class client_obj(threading.Thread):
-    def __init__(self, thread_id, port, keys_dict, recv, event = None, quit_event = None):
+    def __init__(self, thread_id, name ,port, keys_dict, recv, event = None, quit_event = None):
         self.thread_id = thread_id
+        self.name = name
         self.port = port
         self.recv = recv
         self.event = event
