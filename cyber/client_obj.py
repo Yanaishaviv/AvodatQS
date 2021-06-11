@@ -3,9 +3,12 @@ import client
 import socket 
 import threading
 import random
+import AES
+import RSA
 
 class client_obj(threading.Thread):
     def __init__(self, thread_id, name ,port, keys_dict, recv, event = None, quit_event = None):
+        threading.Thread.__init__(self)
         self.thread_id = thread_id
         self.name = name
         self.port = port
@@ -23,13 +26,13 @@ class client_obj(threading.Thread):
             self.read_chat()
         
     def prepare_encryption(self):
-        if recv:
+        if self.recv:
             public_key_0 = int.from_bytes(self.socket.recv(1024), 'big')
             public_key_1 = int.from_bytes(self.socket.recv(1024), 'big')
             public_key = (public_key_0, public_key_1)
             self.keys['public'] = public_key
-            self.keys['aes_key'] = random.getrandbits(constants.BITS_FOR_RSA)
-            self.AES = AES(self.keys['aes_key'])
+            self.keys['aes_key'] = bin(random.getrandbits(constants.BITS_FOR_RSA))
+            self.AES = AES.AES(self.keys['aes_key'])
             self.event.set()
 
         else:
@@ -37,13 +40,13 @@ class client_obj(threading.Thread):
             self.socket.send(str.encode(encr_mes.__str__()))
     
     def add_aes_key(self):
-        self.AES = AES(self.keys['aes_key'])
+        self.AES = AES.AES(self.keys['aes_key'])
 
     def add_app(self, app):
         self.app = app
 
     def recieve_data(self):
-        encrypted_msg = client.recieve_data(self.server)
+        encrypted_msg = client.recieve_data(self.socket)
         msg = self.AES.decrypt(encrypted_msg)
         if msg == '\quit1':
             self.quit_event.set()
@@ -61,7 +64,7 @@ class client_obj(threading.Thread):
             self.recieve_data()
 
     def send_message(self, msg):
-        encrypted_msg = self.AES.encrypt(data)
+        encrypted_msg = self.AES.encrypt(msg)
         client.send_str_data(self.socket, encrypted_msg)
 
     
