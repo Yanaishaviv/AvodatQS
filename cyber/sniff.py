@@ -3,7 +3,7 @@ import constants
 
 def check(packet):
     if (scapy.IP in packet):
-        return packet[scapy.IP].dst == '10.0.0.11' or packet[scapy.IP].src == '10.0.0.11'  
+        return packet[scapy.IP].src == constants.SERVER_IP  
     return False
 
 

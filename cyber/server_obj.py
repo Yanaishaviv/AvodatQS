@@ -49,9 +49,7 @@ class server_obj(threading.Thread):
         if self.sender:
             server.send_int_data(self.cli_con, self.public_key[0])
             server.send_int_data(self.cli_con, self.public_key[1])
-            print("rsa sent")
         else:
-            print("reached line 54 server obj")
             encrypted_key = server.recieve_data(self.cli_con)
             self.add_aes_key(server.get_from_rsa(self.private_key, encrypted_key))
             self.event.set()
@@ -83,5 +81,4 @@ class server_obj(threading.Thread):
 
     def read_chat(self):
         while not self.quit_event.is_set():
-            print("server_obj line 83", self.quit_event.is_set())
             self.recieve_data()

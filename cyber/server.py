@@ -11,11 +11,14 @@ def use_rsa():
     prime_num1 = functions.find_prime(constants.BITS_FOR_RSA) 
     # rsa needs two prime numbers to calculate
     prime1 = int(prime_num1)
+    print('server line 14', prime1)
     prime2 = prime1
     while prime2 == prime1:
         prime_num2 = functions.find_prime(constants.BITS_FOR_RSA) 
         prime2 = int(prime_num2)
     # i'm using one file to hold all RSA related functions
+    print("server line 20", prime2)
+
     return RSA.generate_keypair(prime1, prime2)
 
 
@@ -47,6 +50,7 @@ def send_str_data(client_connection, data):
 
 def send_int_data(client_connection, data):
     message = data.to_bytes(10, 'big')
+    print(message)
     client_connection.send(message)
 
 def get_from_rsa(private, encrypted_msg):
