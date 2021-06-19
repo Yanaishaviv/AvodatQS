@@ -52,6 +52,8 @@ class Application(tk.Frame):
             self.sender_server.send_message('\quit1')
             print("reached gui line 53", threading.current_thread())
         self.master.destroy()
+        print("hello")
+        return
 
 
     def insert_message(self, message):

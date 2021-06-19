@@ -5,8 +5,6 @@ import random
 Euclid's algorithm for determining the greatest common divisor
 Use iteration to make it faster for larger integers
 '''
-
-
 def gcd(a, b):
     while b != 0:
         a, b = b, a % b
@@ -16,8 +14,6 @@ def gcd(a, b):
 '''
 trying again to find that d
 '''
-
-
 def multiplicative_inverse(e, phi):
     d = 1
     while (e*d) % phi != 1:
@@ -28,8 +24,6 @@ def multiplicative_inverse(e, phi):
 '''
 Tests to see if a number is prime.
 '''
-
-
 def is_prime(num):
     if num == 2:
         return True

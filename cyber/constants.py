@@ -7,7 +7,7 @@ SEPARATOR = ', '
 SERVER_IP = '10.0.0.04'
 CLIENT_IP = '10.0.0.11'
 NUMBER_OF_PACKETS = 3
-BITS_FOR_RSA = 5
+BITS_FOR_RSA = 8
 SUB_BYTE_TABLE = [  # The Rijndael S-box, a substitution box for the AES encryption
     # instead of using rows and columns, i concatinated the whole table.
     # so instead of using for example [90, 0a], you should enter the whole 
