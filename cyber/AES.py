@@ -8,7 +8,6 @@ class AES():
     def __init__(self, key):
         self.block_size = AES1.block_size
         self.key = hash.sha256(key.encode()).digest()
-        print("AES line 10", threading.current_thread(), self.key)
 
     def __pad(self, data):
         bytes_to_pad = self.block_size - len(data) % self.block_size
