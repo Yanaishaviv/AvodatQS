@@ -17,7 +17,7 @@ class client_obj(threading.Thread):
         self.quit_event = quit_event
         self.keys = keys_dict
         self.ip = constants.SERVER_IP
-        self.socket = socket.socket()
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
     def run(self):
         self.socket.connect((self.ip, self.port))
