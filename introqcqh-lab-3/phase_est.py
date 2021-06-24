@@ -9,24 +9,21 @@ import operator
 clear_output()
 
 def initialize_qubits(given_circuit, measurement_qubits, target_qubit):
-    
-    ### WRITE YOUR CODE BETWEEN THESE LINES - START
+    # move all the qubits to |-> state
     given_circuit.h(measurement_qubits)
+    # except the controlled one, to |1>
     given_circuit.x(target_qubit)
 
 def unitary_operator(given_circuit, control_qubit, target_qubit, theta):
-    
-    ### WRITE YOUR CODE BETWEEN THESE LINES - START
-    given_circuit.cu1(2*pi*theta, control_qubit, target_qubit)
+    # create a basic unitary operator
+    given_circuit.cp(2*pi*theta, control_qubit, target_qubit)
 
 def unitary_operator_exponent(given_circuit, control_qubit, target_qubit, theta, exponent):
-    
-    ### WRITE YOUR CODE BETWEEN THESE LINES - START
-    given_circuit.cu1(2*pi*theta*exponent, control_qubit, target_qubit)
+    # create a unitary operator which takes into account the exponent 
+    given_circuit.cp(2*pi*theta*exponent, control_qubit, target_qubit)
 
 def apply_iqft(given_circuit, measurement_qubits, n):
-    
-    ### WRITE YOUR CODE BETWEEN THESE LINES - START
+    # applt the quantum fourier transform on all measurement qubits
     given_circuit.append(QFT(n).inverse(), measurement_qubits)
 
 
