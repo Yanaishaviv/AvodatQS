@@ -51,7 +51,7 @@ def qpe_program(n, theta):
 
 
 def est(n, theta):
-    n = 20; theta = pi/2-0.2
+    n = 24; theta = 0.5
     mycircuit = qpe_program(n, theta)
     simulator = Aer.get_backend('qasm_simulator')
     counts = execute(mycircuit, backend=simulator).result().get_counts(mycircuit)
