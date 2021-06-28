@@ -420,8 +420,8 @@ if __name__ == '__main__':
 
     """ If user wants to force some values, he can do that here, please make sure to update the print and that N and a are coprime"""
     print('Forcing N=15 and a=4 because its the fastest case, please read top of source file for more info')
-    N=15
-    a=4
+    #N=21
+    #a=4
 
     """ Get n value used in Shor's algorithm, to know how many qubits are used """
     n = math.ceil(math.log(N,2))
