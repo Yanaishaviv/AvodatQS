@@ -50,6 +50,9 @@ def shor(N, attempts = 1):
         
         '''If the GCD is not 1, x is a nontrivial factor of N, so we're done'''
         if (math.gcd(a, N) != 1):
+            q = math.gcd(a, N)
+            p = N/q
+            return (p, q)
             print("\nFactors found classically, re-attempt...")
             continue
         
@@ -66,7 +69,7 @@ def shor(N, attempts = 1):
         '''
         if ((r % 2 != 0) or (pow(a, int(r/2), N) == -1)): 
             print("r is odd or x^r/2 = -1 (mod N), re-attempt...")
-            continue
+            return (1, N)
             
         print("\nPeriod found: " + str(r))
         
@@ -80,8 +83,8 @@ def shor(N, attempts = 1):
             return (p, q)
         else:
             print("\nBad luck: Found {} and {}".format(p, q))
+            return (1, N)
 
 
 
 
-print(shor(35))

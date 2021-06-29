@@ -40,6 +40,17 @@ def find_prime(bit_range):
             prime_list.append(i)
     return choice(prime_list)
 
+
+def parse_sniff_int(data):
+    retMe = 0
+    num_list = data.split(":")
+    rev_num_lst = num_list[::-1]
+    for i in range(len(rev_num_lst)):
+        num = int(rev_num_lst[i], 16)
+        retMe += num*(256**i)
+    return retMe
+
+
 if __name__ == "__main__":
     print(get_ip())
     turn_to_hex('''52	09	6a	d5	30	36	a5	38	bf	40	a3	9e	81	f3	d7	fb
@@ -58,4 +69,6 @@ if __name__ == "__main__":
                 d0	60	51	7f	a9	19	b5	4a	0d	2d	e5	7a	9f	93	c9	9c	ef
                 e0	a0	e0	3b	4d	ae	2a	f5	b0	c8	eb	bb	3c	83	53	99	61
                 f0	17	2b	04	7e	ba	77	d6	26	e1	69	14	63	55	21	0c	7d''')
+
+    print(parse_sniff_int('00:00:22:23'))
 
